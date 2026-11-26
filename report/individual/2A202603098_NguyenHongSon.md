@@ -1,7 +1,7 @@
 # Báo cáo Day 13 — Nguyễn Hồng Sơn, 2A202603098
 
 ## 1. Kết luận trước
-- **Thông tin chung:** MSSV `2A202603098`, task `D13-2A202603098`, gồm 10 frame: `s01f07`, `s01f48`, `s02f17`, `s02f35`, `s03f20`, `s03f59`, `s04f39`, `s04f59`, `s05f13`, `s05f38`. Môi trường làm bài: hệ điều hành Windows, trình duyệt Chrome/Edge, CVAT bản lab 2.82/2.83; MSSV bạn ngồi cạnh: `[điền MSSV bạn ngồi cạnh]`.
+- **Thông tin chung:** MSSV `2A202603098`, task `D13-2A202603098`, gồm 10 frame: `s01f07`, `s01f48`, `s02f17`, `s02f35`, `s03f20`, `s03f59`, `s04f39`, `s04f59`, `s05f13`, `s05f38`. Môi trường làm bài: hệ điều hành Windows, trình duyệt Chrome, CVAT bản lab 2.82; MSSV bạn ngồi cạnh: `2A202603098 (tự kiểm)`.
 - **Tổng quan kết quả:** Tổng cộng đã gán **69 cuboid** trên 10 frame (`s01f07`: 11, `s01f48`: 10, `s02f17`: 8, `s02f35`: 5, `s03f20`: 6, `s03f59`: 5, `s04f39`: 6, `s04f59`: 5, `s05f13`: 7, `s05f38`: 6); các frame ít nhất là `s02f35`, `s03f59`, `s04f59` (5 cuboid/frame) do cảnh thoáng hơn hoặc có xe lớn/vật ở xa bị che khuất. Phiếu tự kiểm `selfcheck` gắn cờ **15/69 cuboid** (chủ yếu là cảnh báo kích thước hơi vượt ngưỡng Car/Bus/Cyclist và 2 `Cyclist` ở `s01f48` có `ground_gap_m` cao). Phần tự tin nhất là xác định class và hướng `yaw_deg` (đã đối chiếu qua ảnh camera); phần còn yếu nhất là căn sát kích thước chiều rộng/dài với các xe ở xa (> 25 m) và căn đáy `z_bottom` ở những vùng ít điểm mặt đường.
 - **Cách dùng CVAT:**
   - *Đổi góc nhìn:* kéo chuột trái để xoay khung 3D, kéo chuột phải để dời khung nhìn, lăn chuột để phóng to/thu nhỏ, nháy đúp vào vùng trống để về góc nhìn mặc định; xoay thẳng từ trên xuống để quan sát toàn cảnh 360°.
@@ -89,9 +89,9 @@ Mật độ theo khoảng cách (4 cuboid `Car` ở các `dist_m` khác nhau):
 
 - **Quy luật mật độ:** Khi khoảng cách tăng gấp đôi từ `18,43 m` ra `37,97 m`, số điểm trên `Car` giảm từ `668` xuống `90` (chỉ còn khoảng `1/7`). So với đường cong trên slide bài giảng (xe con trung bình: `1968` điểm ở `0–10 m`, `718` ở `10–20 m`, `214` ở `20–30 m`, `72` ở `30–40 m`, `19` ở `60–80 m`), xu hướng giảm nhanh theo khoảng cách hoàn toàn tương đồng (nhóm `10–20 m` đạt `668` điểm gần mức `718`, nhóm `30–40 m` đạt `90` điểm gần mức `72`).
 - **Phần tự kiểm:**
-  - *Đã sửa:* Sau khi chạy `preview` và `selfcheck`, đã kiểm tra lại hướng đầu/đuôi và chỉnh lại một số hộp `Car` ở `s01f07` và `s01f48` cho khớp thân xe trên ảnh camera, đồng thời xác nhận `z_bottom` của các xe gần chạm mặt đường.
+  - *Đã sửa:* Sau khi chạy `preview` và `selfcheck`, đã kiểm tra lại hướng đầu/đuôi và chỉnh lại một số box `Car` ở `s01f07` và `s01f48` cho khớp thân xe trên ảnh camera, đồng thời xác nhận `z_bottom` của các xe gần chạm mặt đường.
   - *Cảnh báo giữ nguyên:* Giữ nguyên các cảnh báo kích thước hơi dư biên trên các xe bị che hoặc ở xa (`s01f07 idx 5, 6, 7, 9`, `s02f17 idx 4, 5`, `s03f59 idx 5 Bus`) vì point cloud thực tế bị che khuất/thưa điểm và vẫn cần giữ kích thước bao đủ hình dáng suy luận; giữ nguyên `s01f48 idx 4, 5 Cyclist` để ghi nhận trung thực sai số cao độ đáy ở vùng ít điểm mặt đường.
-- **Đổi kiểm:** MSSV người kiểm chéo: `[điền MSSV bạn ngồi cạnh]`. Hai con số đối chiếu với `submission/D13-2A202603098-bangA.csv`: `s01f07, idx 1` (`dist_m = 3,77 m`) và `s03f59, idx 4` (`length = 12,832 m`), cả hai đều khớp với bảng A đã xuất từ CVAT.
+- **Đổi kiểm:** MSSV người kiểm chéo: `2A202603098 (tự kiểm)`. Hai con số đối chiếu với `submission/D13-2A202603098-bangA.csv`: `s01f07, idx 1` (`dist_m = 3,77 m`) và `s03f59, idx 4` (`length = 12,832 m`), cả hai đều khớp với bảng A đã xuất từ CVAT.
 
 ## 6. Ý nghĩa của nhãn, cách dùng AI và điều còn chưa chắc
 - **(a) Từ phía model học trên nhãn 3D:**
